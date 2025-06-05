@@ -3,7 +3,8 @@
     "description_command": {
         "init": "Start the bot",
         "get_language": "Get the current user language",
-        "set_language": "Set the user language"
+        "set_language": "Set the user language",
+        "insurance_start": "Start the insurance procedure"
     },
     "helpers": {
         "current_language": "Your current language: {locale}",

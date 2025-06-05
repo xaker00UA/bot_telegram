@@ -3,7 +3,8 @@
     "description_command": {
         "init": "Запустити бота",
         "get_language": "Отримати поточну мову користувача",
-        "set_language": "Встановити мову користувача"
+        "set_language": "Встановити мову користувача",
+        "insurance_start": "Розпочати процедуру страхування"
     },
     "helpers": {
         "current_language": "Ваша поточна мова: {locale}",
