@@ -1,0 +1,5 @@
+.vscode
+document
+output
+__pycache__
+user.db

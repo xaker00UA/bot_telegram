@@ -1,0 +1,42 @@
+INSURANCE POLICY No. {{ policy_number }}
+
+Insurance Company:       Insurance Company Ltd.
+Company Address:         сity Kyiv
+Contact Phone:           000000000
+
+-----------------------------------------------------
+POLICYHOLDER INFORMATION
+-----------------------------------------------------
+Full Name:               {{ first_name }}, {{ last_name }}
+Date of Birth:           {{ birth_day }}
+ID/Passport Number:      {{ id }}
+
+
+-----------------------------------------------------
+INSURANCE DETAILS
+-----------------------------------------------------
+Insurance Type:          medical insurance
+Coverage Period:         {{ start_date }} to {{ end_date }}
+Coverage Amount:          10000$
+
+-----------------------------------------------------
+Automobile
+-----------------------------------------------------
+Brand:                   {{ car_brand }}
+Model:                   {{ car_model }}
+Year:                    {{ manufacture_year }}
+Number:                  {{ registration_number }}
+
+-----------------------------------------------------
+TERMS AND CONDITIONS
+-----------------------------------------------------
+
+
+-----------------------------------------------------
+Date of Issue:           {{ issue_date }}
+
+Signature of Policyholder:   _______________________
+
+Signature of Insurer:        _______________________
+
+Stamp (if applicable)

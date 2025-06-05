@@ -1,0 +1,24 @@
+{
+    "welcome": "Hello!\nI am your virtual assistant for car insurance. My goal is to help you understand the options, compare rates, and find the best insurance for your car. Let me know your requirements or questions, and I will help you make the right choice!",
+    "description_command": {
+        "init": "Start the bot",
+        "get_language": "Get the current user language",
+        "set_language": "Set the user language"
+    },
+    "helpers": {
+        "current_language": "Your current language: {locale}",
+        "change_language": "Choose a language",
+        "set_language": "Language changed to {locale}"
+    },
+    "insurance": {
+        "start": "Please provide a photo of the front side of your passport.",
+        "passport_back": "Please provide a photo of the back side of your passport.",
+        "technical_passport": "Please provide a document confirming your car's identification (front side).",
+        "technical_passport_back": "Please provide a document confirming your car's identification (back side).",
+        "documents": "Your documents: {first_name} {last_name}\nDate of birth: {birth_day}\nID: {id}\nGender: {sex}\nDocument number: {document_number}\nCar:\nYear of manufacture: {manufacture_year}\nBrand: {car_brand}\nModel: {car_model}\nColor: {color}\nRegistration number: {registration_number}\nRegistered on: {registration_date}\nConfirm",
+        "confirm_documents": "Documents confirmed, the insurance cost is $100. Please confirm.",
+        "reject_documents": "Let's try again. Please provide a photo of the front side of your passport.",
+        "confirm_price": "Here is your insurance.",
+        "reject_price": "Sorry, but we only have one price."
+    }
+}
