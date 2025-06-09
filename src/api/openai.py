@@ -19,6 +19,7 @@ class APIOpenAI:
         payload = {
             "model": model,
             "messages": [{"role": "user", "content": prompt}],
+            "max_tokens": 700,
         }
         async with ClientSession() as client:
             async with client.post(
