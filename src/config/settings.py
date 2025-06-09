@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     TOKEN: str
     FILE_TEXT: str = "message"
     API_KEY: str
+    OPENAI_API_KEY: str
     ADMIN_ID: int
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")

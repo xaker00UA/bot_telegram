@@ -98,7 +98,7 @@ async def confirm_documents(
     Handler for confirming documents.
     Sends a message indicating that the documents have been confirmed.
     """
-
+    await callback.answer()
     await state.set_state(Insurance.confirm_price)
     data = settings.get_localized_text(locale)["insurance"]
     inline_kb = get_confirm_keyboard("confirm_price", "reject_price")
@@ -115,6 +115,7 @@ async def reject_documents(
     Handler for rejecting documents.
     Sends a message indicating that the documents have been rejected.
     """
+    await callback.answer()
     await state.set_state(Insurance.photo_passport_front)
     data = settings.get_localized_text(locale)["insurance"]
     await callback.message.answer(data.get("reject_documents"))
@@ -147,7 +148,6 @@ async def reject_price(callback: CallbackQuery, state: FSMContext, locale, **kwa
     Handler for rejecting the price.
     Sends a message indicating that the price has been rejected.
     """
-    await callback.answer("Price rejected")
     data = settings.get_localized_text(locale)["insurance"]
     inline_kb = get_confirm_keyboard("confirm_price", "reject_price")
     await callback.answer()
