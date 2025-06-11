@@ -64,9 +64,8 @@ def crate_temp_file(data: dict) -> str:
 
     # Заполнение шаблона
     output = template
-    # for key, value in data.items():
-    #     output = output.replace(f"{{{{ {key} }}}}", str(value))
-    output = output.format(**data)
+    for key, value in data.items():
+        output = output.replace(f"{{{{ {key} }}}}", str(value))
 
     # Создание директории для результата
     output_dir = "document"
