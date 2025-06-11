@@ -64,15 +64,16 @@ def crate_temp_file(data: dict) -> str:
 
     # Заполнение шаблона
     output = template
-    for key, value in data.items():
-        output = output.replace(f"{{{{ {key} }}}}", str(value))
+    # for key, value in data.items():
+    #     output = output.replace(f"{{{{ {key} }}}}", str(value))
+    output = output.format(**data)
 
     # Создание директории для результата
     output_dir = "document"
     os.makedirs(output_dir, exist_ok=True)
 
-    first_name = data.get("first_name")
-    last_name = data.get("last_name")
+    first_name = data.get("surnames")
+    last_name = data.get("given_names")
 
     filename = f"{first_name}_{last_name}_{uuid.uuid4().hex}.txt"
     output_path = os.path.join(output_dir, filename)
