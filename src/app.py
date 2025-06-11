@@ -21,7 +21,7 @@ async def set_commands(bot: Bot):
         BotCommand(command="start", description=data["init"]),
         BotCommand(command="get_language", description=data["get_language"]),
         BotCommand(command="set_language", description=data["set_language"]),
-        BotCommand(command="insurance_start", description=data["insurance_start"]),
+        # BotCommand(command="insurance_start", description=data["insurance_start"]),
     ]
     await bot.set_my_commands(commands)
 

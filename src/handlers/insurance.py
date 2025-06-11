@@ -3,7 +3,7 @@ from re import S
 import re
 from aiogram import F, Router
 from aiogram.types import Message, CallbackQuery, InputMediaPhoto, FSInputFile
-from aiogram.filters import Command
+from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
 from src.service.generated_doc import crate_temp_file, generate_pdf_from_urls
 from src.api.minde import APIService
@@ -20,71 +20,42 @@ async def process_photo(message: Message):
     return f"https://api.telegram.org/file/bot{message.bot.token}/{file.file_path}"
 
 
-@insurance_router.message(Command("insurance_start"))
+@insurance_router.message(CommandStart())
 async def insurance_start(message: Message, state: FSMContext, locale):
     """
     Handler for the /insurance_start command.
     Sends a message indicating that the insurance process has started.
     """
-    data = settings.get_localized_text(locale)["insurance"]
+    data = settings.get_localized_text(locale)
+    await message.answer(text=data.get("welcome"))
     await state.set_state(Insurance.photo_passport_front)
-
-    await message.answer(data.get("start"))
-    await message.answer_photo("https://surl.lu/czmaqw", caption="Id card front side ")
+    await message.answer(text=data.get("insurance").get("start"))
 
 
 @insurance_router.message(Insurance.photo_passport_front, F.photo)
 async def passport_front(message: Message, state: FSMContext, locale):
     url = await process_photo(message)
-    await state.update_data(passport_front=url)
-    await state.set_state(Insurance.photo_passport_back)
-    data = settings.get_localized_text(locale)["insurance"]
-    await message.answer(data.get("passport_back"))
-
-
-@insurance_router.message(Insurance.photo_passport_back, F.photo)
-async def passport_back(message: Message, state: FSMContext, locale):
-    url = await process_photo(message)
-    await state.update_data(passport_back=url)
     await state.set_state(Insurance.photo_tech_front)
     data = settings.get_localized_text(locale)["insurance"]
-    await message.answer(data.get("technical_passport"))
-    await message.answer_photo(
-        "https://autoportal.ua/img/inf/novosti/prava_4_2.jpg",
-        caption="Technical_passport_car",
-    )
+    await message.answer(text="Processing documents...")
+    res = await APIService().get_info_pass(url)
+    await state.set_data({"passport": res})
+    await message.answer(text=data.get("technical_passport"))
 
 
 @insurance_router.message(Insurance.photo_tech_front, F.photo)
 async def tech_front(message: Message, state: FSMContext, locale):
     url = await process_photo(message)
-    await state.update_data(tech_front=url)
-    await state.set_state(Insurance.photo_tech_back)
-    data = settings.get_localized_text(locale)["insurance"]
-    await message.answer(data.get("technical_passport_back"))
-
-
-@insurance_router.message(Insurance.photo_tech_back, F.photo)
-async def tech_back(message: Message, state: FSMContext, locale):
-    url = await process_photo(message)
-    await state.update_data(tech_back=url)
-    text = settings.get_localized_text(locale)["insurance"]
     await message.answer("Processing documents...")
-
+    res = await APIService().get_info_tech(url)
+    await state.update_data(tech=res)
     data = await state.get_data()
-    pdf_path = await generate_pdf_from_urls(
-        [
-            data["passport_front"],
-            data["passport_back"],
-            data["tech_front"],
-            data["tech_back"],
-        ]
-    )
-    res = await APIService().get_info(pdf_path)
-    os.remove(pdf_path)
+    text = settings.get_localized_text(locale)["insurance"]
     inline_kb = get_confirm_keyboard("confirm_documents", "reject_documents")
-    await state.set_data({"data": res})
-    await message.answer(text.get("documents").format(**res), reply_markup=inline_kb)
+    await message.answer(
+        text=text.get("documents").format(**data["tech"], **data["passport"]),
+        reply_markup=inline_kb,
+    )
     await state.set_state(Insurance.confirm_documents)
 
 
@@ -130,8 +101,8 @@ async def confirm_price(callback: CallbackQuery, state: FSMContext, locale, **kw
     data = settings.get_localized_text(locale)["insurance"]
     await callback.answer(data.get("confirm_price"))
     inst = await state.get_data()
-    inst = inst.get("data")
-    path = crate_temp_file(inst)
+    result = inst.get("tech") | inst.get("passport")
+    path = crate_temp_file(result)
 
     await callback.bot.send_document(
         callback.from_user.id,

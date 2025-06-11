@@ -14,9 +14,9 @@
     "insurance": {
         "start": "Please provide a photo of the front side of your passport.",
         "passport_back": "Please provide a photo of the back side of your passport.",
-        "technical_passport": "Please provide a document confirming your car's identification (front side).",
+        "technical_passport": "Please provide a document confirming your car's identification.",
         "technical_passport_back": "Please provide a document confirming your car's identification (back side).",
-        "documents": "Your documents: {first_name} {last_name}\nDate of birth: {birth_day}\nID: {id}\nGender: {sex}\nDocument number: {document_number}\nCar:\nYear of manufacture: {manufacture_year}\nBrand: {car_brand}\nModel: {car_model}\nColor: {color}\nRegistration number: {registration_number}\nRegistered on: {registration_date}\nConfirm",
+        "documents": "Your documents: {surnames} {given_names}\nDate of birth: {birth_date}\nDocument_number: {document_number}\nGender: {sex}\nCountry: {country_of_issue}\nCar\nBrand: {manufacturer}\nModel: {model}\nVehicle_identification_number: {vehicle_identification_number}\nConfirm",
         "confirm_documents": "Documents confirmed, the insurance cost is $100. Please confirm.",
         "reject_documents": "Let's try again. Please provide a photo of the front side of your passport.",
         "confirm_price": "Here is your insurance.",

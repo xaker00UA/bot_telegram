@@ -7,9 +7,9 @@ Contact Phone:           000000000
 -----------------------------------------------------
 POLICYHOLDER INFORMATION
 -----------------------------------------------------
-Full Name:               {{ first_name }}, {{ last_name }}
-Date of Birth:           {{ birth_day }}
-ID/Passport Number:      {{ id }}
+Full Name:               {{ surnames }}, {{ given_names }}
+Date of Birth:           {{ birth_date }}
+Document_number:         {{ document_number }}
 
 
 -----------------------------------------------------
@@ -22,10 +22,9 @@ Coverage Amount:          10000$
 -----------------------------------------------------
 Automobile
 -----------------------------------------------------
-Brand:                   {{ car_brand }}
-Model:                   {{ car_model }}
-Year:                    {{ manufacture_year }}
-Number:                  {{ registration_number }}
+Brand:                         {{ manufacturer }}
+Model:                         {{ model }}
+Vehicle_identification_number: {{ vehicle_identification_number }}
 
 -----------------------------------------------------
 TERMS AND CONDITIONS

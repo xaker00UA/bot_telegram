@@ -14,13 +14,7 @@ class APIService:
         ) as session:
             form = FormData()
 
-            with open(document, "rb") as f:
-                form.add_field(
-                    name="document",
-                    value=f.read(),
-                    filename="insurance_data.pdf",
-                    content_type="application/json",
-                )
+            form.add_field("document", document)
 
             async with session.post(url, data=form) as resp:
                 resp.raise_for_status()
@@ -67,11 +61,23 @@ class APIService:
             "Обработка документа заняла слишком много времени."
         )
 
-    async def get_info(self, file_path):
-        url = "https://api.mindee.net/v1/products/xaker/car_info/v1/predict_async"
+    async def get_info_pass(self, file_path):
+        url = "https://api.mindee.net/v1/products/mindee/international_id/v2/predict_async"
         response = await self.get_info_document(url, file_path)
         data = response.get("inference", {}).get("prediction", {})
         result = {}
         for key, value in data.items():
-            result[key] = value.get("value")
+            if isinstance(value, dict):
+                result[key] = value.get("value") if value.get("value") else None
+            if isinstance(value, list):
+                result[key] = ", ".join(i.get("value") for i in value if i.get("value"))
+        return result
+
+    async def get_info_tech(self, file_path):
+        url = "https://api.mindee.net/v1/products/xaker/vehicle_dentification_document/v1/predict_async"
+        response = await self.get_info_document(url, file_path)
+        data = response.get("inference", {}).get("prediction", {})
+        result = {}
+        for key, value in data.items():
+            result[key] = value.get("value") if value.get("value") else None
         return result

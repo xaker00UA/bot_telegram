@@ -1,4 +1,3 @@
-from ssl import cert_time_to_seconds
 from sqlalchemy.orm import DeclarativeBase, Mapped, sessionmaker, mapped_column
 from sqlalchemy import create_engine
 
