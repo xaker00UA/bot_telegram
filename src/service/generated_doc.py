@@ -1,42 +1,7 @@
 import datetime
 import random
-import aiohttp
-from PIL import Image
-from io import BytesIO
 import uuid
 import os
-
-
-async def generate_pdf_from_urls(urls: list[str]) -> str:
-    """
-    Скачивает изображения по URL, объединяет их в PDF и сохраняет во временный файл.
-
-    :param urls: Список URL изображений
-    :return: Путь к PDF-файлу
-    """
-    images = []
-    output_dir = "output"
-
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-
-    async with aiohttp.ClientSession() as session:
-        for url in urls:
-            async with session.get(url) as resp:
-                if resp.status != 200:
-                    raise Exception(
-                        f"Ошибка загрузки изображения: {url} — {resp.status}"
-                    )
-                img_bytes = await resp.read()
-                img = Image.open(BytesIO(img_bytes)).convert("RGB")
-                images.append(img)
-
-    if not images:
-        raise Exception("Не удалось загрузить ни одного изображения")
-
-    output_path = os.path.join(output_dir, f"insurance_{uuid.uuid4().hex}.pdf")
-    images[0].save(output_path, save_all=True, append_images=images[1:])
-    return output_path
 
 
 def crate_temp_file(data: dict) -> str:

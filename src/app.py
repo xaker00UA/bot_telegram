@@ -7,7 +7,11 @@ from aiogram.fsm.storage.base import DefaultKeyBuilder
 
 from src.handlers import router
 from src.config.settings import settings
-from src.middleware.middleware import GlobalExceptionMiddleware, LocalizationMiddleware
+from src.middleware.middleware import (
+    GlobalExceptionMiddleware,
+    LocalizationMiddleware,
+    AddContextMessageMiddleware,
+)
 
 storage = RedisStorage.from_url(
     "redis://localhost:6379/4",  # или конфигурация твоего Redis
@@ -35,6 +39,7 @@ async def main():
     dp.callback_query.middleware.register(LocalizationMiddleware())
     dp.message.middleware.register(GlobalExceptionMiddleware(bot))
     dp.callback_query.middleware.register(GlobalExceptionMiddleware(bot))
+    dp.message.middleware.register(AddContextMessageMiddleware())
     dp.include_router(router)
     logger.info("Starting bot")
     await bot.delete_webhook(drop_pending_updates=True)

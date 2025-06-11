@@ -1,3 +1,5 @@
+from multiprocessing.spawn import import_main_path
+from operator import add
 import os
 from re import S
 import re
@@ -10,6 +12,7 @@ from src.api.minde import APIService
 from src.keyboard.main import get_confirm_keyboard
 from src.config.settings import settings
 from src.scenario.insurance import Insurance
+
 
 insurance_router = Router()
 
